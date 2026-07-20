@@ -77,7 +77,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('surat/{surat}', [SuratController::class, 'show'])->name('surat.show');
     Route::patch('surat/{surat}/status', [SuratController::class, 'updateStatus'])->name('surat.status');
 
-    Route::resource('jenis-surat', JenisSuratController::class)->parameters(['jenis-surat' => 'jenissurat']);
+    Route::resource('jenis-surat', JenisSuratController::class)->names('jenissurat')->parameters(['jenis-surat' => 'jenissurat']);
 
     Route::resource('berita', AdminBeritaController::class);
 });
