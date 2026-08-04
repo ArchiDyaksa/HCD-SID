@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToDesa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Surat extends Model
 {
-    use HasFactory;
+    use BelongsToDesa, HasFactory;
 
     protected $fillable = [
+        'desa_profile_id',
         'kode_tracking',
         'nomor_surat',
         'jenis_surat_id',

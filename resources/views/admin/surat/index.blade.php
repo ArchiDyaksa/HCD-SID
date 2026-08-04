@@ -6,15 +6,15 @@
 
 <!-- Header Filter & Search -->
 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-    <form method="GET" class="w-full flex flex-col sm:flex-row gap-3">
-        <div class="relative flex-grow sm:w-72">
+    <form method="GET" class="w-full flex flex-col md:flex-row flex-wrap gap-3">
+        <div class="relative flex-grow min-w-[200px]">
             <i class="ti ti-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
             <input type="text" name="q" value="{{ $search ?? '' }}" placeholder="Cari kode / pemohon / NIK..."
                    class="w-full border border-slate-200 rounded-2xl pl-11 pr-4 py-2.5 text-xs focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none transition-all">
         </div>
-        <div class="relative min-w-[200px]">
-            <i class="ti ti-filter absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
-            <select name="status" class="w-full border border-slate-200 rounded-2xl pl-11 pr-8 py-2.5 text-xs focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none appearance-none cursor-pointer transition-all">
+        
+        <div class="relative min-w-[180px]">
+            <select name="status" class="w-full border border-slate-200 rounded-2xl pl-4 pr-8 py-2.5 text-xs focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none appearance-none cursor-pointer transition-all">
                 <option value="">Semua Status</option>
                 @foreach (['diajukan' => 'Menunggu Verifikasi', 'diproses' => 'Sedang Diproses', 'disetujui' => 'Disetujui', 'ditolak' => 'Ditolak', 'selesai' => 'Selesai'] as $val => $label)
                     <option value="{{ $val }}" {{ ($status ?? '') === $val ? 'selected' : '' }}>{{ $label }}</option>
@@ -22,7 +22,17 @@
             </select>
             <i class="ti ti-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
         </div>
+
+        <div class="flex items-center gap-2">
+            <input type="date" name="dari_tanggal" value="{{ request('dari_tanggal') }}" placeholder="Dari Tgl"
+                   class="border border-slate-200 rounded-2xl px-3 py-2 text-xs text-slate-600 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            <span class="text-xs text-slate-400 font-bold">s/d</span>
+            <input type="date" name="sampai_tanggal" value="{{ request('sampai_tanggal') }}" placeholder="Sampai Tgl"
+                   class="border border-slate-200 rounded-2xl px-3 py-2 text-xs text-slate-600 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        </div>
+
         <button class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-6 py-2.5 rounded-2xl text-xs transition-colors flex items-center justify-center gap-1.5">
+            <i class="ti ti-filter"></i>
             <span>Filter</span>
         </button>
     </form>

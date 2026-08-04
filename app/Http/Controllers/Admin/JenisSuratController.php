@@ -20,13 +20,7 @@ class JenisSuratController extends Controller
         return view('admin.jenissurat.form', ['jenisSurat' => new JenisSurat()]);
     }
 
-    public function store(Request $request)
-    {
-        $data = $this->validateData($request);
-        JenisSurat::create($data);
-
-        return redirect()->route('admin.jenissurat.index')->with('success', 'Jenis surat ditambahkan.');
-    }
+   
 
     public function edit(JenisSurat $jenissurat)
     {
@@ -46,6 +40,14 @@ class JenisSuratController extends Controller
         $jenissurat->delete();
 
         return back()->with('success', 'Jenis surat dihapus.');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $this->validateData($request);
+        JenisSurat::create($data);
+
+        return redirect()->route('admin.jenissurat.index')->with('success', 'Jenis surat ditambahkan.');
     }
 
     private function validateData(Request $request, $ignoreId = null): array

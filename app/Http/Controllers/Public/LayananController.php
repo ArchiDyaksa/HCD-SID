@@ -16,15 +16,6 @@ class LayananController extends Controller
         return view('public.layanan.index', compact('jenisSurats'));
     }
 
-    public function form(JenisSurat $jenisSurat)
-    {
-        if (! $jenisSurat->aktif) {
-            abort(404);
-        }
-
-        return view('public.layanan.form', compact('jenisSurat'));
-    }
-
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -35,7 +26,10 @@ class LayananController extends Controller
             'keperluan' => 'required|string',
         ]);
 
-        $surat = Surat::create($data + ['status' => 'diajukan']);
+        $surat = Surat::create($data + [
+            'status' => 'diajukan',
+            'tanggal_pengajuan' => now(),
+        ]);
 
         return redirect()
             ->route('layanan.sukses', $surat->kode_tracking)
@@ -47,6 +41,15 @@ class LayananController extends Controller
         $surat = Surat::with('jenisSurat')->where('kode_tracking', $kode)->firstOrFail();
 
         return view('public.layanan.sukses', compact('surat'));
+    }
+
+    public function form(JenisSurat $jenisSurat)
+    {
+        if (! $jenisSurat->aktif) {
+            abort(404);
+        }
+
+        return redirect()->route('layanan.index', ['open_id' => $jenisSurat->id]);
     }
 
     public function cekStatusForm()
@@ -65,5 +68,13 @@ class LayananController extends Controller
             ->first();
 
         return view('public.layanan.cek-status', compact('surat'));
+    }
+
+    public function cetak(string $kode)
+    {
+        $surat = Surat::with('jenisSurat')->where('kode_tracking', strtoupper($kode))->firstOrFail();
+        $profile = \App\Models\DesaProfile::current();
+
+        return view('public.layanan.cetak', compact('surat', 'profile'));
     }
 }

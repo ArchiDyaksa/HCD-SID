@@ -20,9 +20,66 @@ class PendudukController extends Controller
             });
         }
 
-        $penduduks = $query->orderBy('nama')->paginate(15)->withQueryString();
+        if ($rt = $request->get('rt')) {
+            $query->where('rt', $rt);
+        }
 
-        return view('admin.penduduk.index', compact('penduduks', 'search'));
+        if ($rw = $request->get('rw')) {
+            $query->where('rw', $rw);
+        }
+
+        if ($jk = $request->get('jenis_kelamin')) {
+            $query->where('jenis_kelamin', $jk);
+        }
+
+        $penduduks = $query->orderBy('nama')->paginate(15)->withQueryString();
+        $rtList = Penduduk::whereNotNull('rt')->distinct()->pluck('rt')->sort();
+        $rwList = Penduduk::whereNotNull('rw')->distinct()->pluck('rw')->sort();
+
+        return view('admin.penduduk.index', compact('penduduks', 'search', 'rtList', 'rwList'));
+    }
+
+    public function show(Penduduk $penduduk)
+    {
+        $anggotaKeluarga = $penduduk->no_kk 
+            ? Penduduk::where('no_kk', $penduduk->no_kk)->where('id', '!=', $penduduk->id)->get() 
+            : collect();
+
+        return view('admin.penduduk.show', compact('penduduk', 'anggotaKeluarga'));
+    }
+
+    public function kartuKeluarga(Request $request)
+    {
+        $query = Penduduk::whereNotNull('no_kk')->where('no_kk', '!=', '');
+
+        if ($search = $request->get('q')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('no_kk', 'like', "%{$search}%")
+                  ->orWhere('nama', 'like', "%{$search}%");
+            });
+        }
+
+        $kkList = $query->select('no_kk')
+            ->distinct()
+            ->paginate(10)
+            ->withQueryString();
+
+        // Load members for each KK
+        $kkData = [];
+        foreach ($kkList as $kk) {
+            $members = Penduduk::where('no_kk', $kk->no_kk)->orderBy('tanggal_lahir')->get();
+            $kkData[] = [
+                'no_kk' => $kk->no_kk,
+                'kepala_keluarga' => $members->first()->nama ?? '-',
+                'rt' => $members->first()->rt ?? '-',
+                'rw' => $members->first()->rw ?? '-',
+                'alamat' => $members->first()->alamat ?? '-',
+                'total_anggota' => $members->count(),
+                'members' => $members,
+            ];
+        }
+
+        return view('admin.penduduk.kk', compact('kkList', 'kkData', 'search'));
     }
 
     public function create()

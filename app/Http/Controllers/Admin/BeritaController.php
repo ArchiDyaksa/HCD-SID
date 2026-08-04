@@ -26,20 +26,6 @@ class BeritaController extends Controller
         return view('admin.berita.form', ['berita' => new Berita()]);
     }
 
-    public function store(Request $request)
-    {
-        $data = $this->validateData($request);
-        $data['gambar'] = $this->handleUpload($request);
-        $data['penulis'] = $data['penulis'] ?? $request->user()->name;
-
-        if ($data['status'] === 'terbit' && empty($data['tanggal_publish'])) {
-            $data['tanggal_publish'] = now();
-        }
-
-        Berita::create($data);
-
-        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dipublikasikan.');
-    }
 
     public function edit(Berita $berita)
     {
@@ -70,6 +56,21 @@ class BeritaController extends Controller
         return back()->with('success', 'Berita berhasil dihapus.');
     }
 
+    public function store(Request $request)
+    {
+        $data = $this->validateData($request);
+        $data['gambar'] = $this->handleUpload($request);
+        $data['penulis'] = $data['penulis'] ?? $request->user()->name;
+
+        if ($data['status'] === 'terbit' && empty($data['tanggal_publish'])) {
+            $data['tanggal_publish'] = now();
+        }
+
+        Berita::create($data);
+
+        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dipublikasikan.');
+    }
+
     private function validateData(Request $request): array
     {
         return $request->validate([
@@ -78,7 +79,7 @@ class BeritaController extends Controller
             'konten' => 'required|string',
             'penulis' => 'nullable|string|max:255',
             'status' => 'required|in:draft,terbit',
-            'gambar' => 'nullable|image|max:2048',
+            'gambar' => 'nullable|image|max:500',
         ]);
     }
 

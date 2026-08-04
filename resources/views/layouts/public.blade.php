@@ -4,24 +4,263 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Sistem Informasi Desa')</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23047857'/><path d='M30 70 L50 30 L70 70 Z' fill='%23ffffff'/><circle cx='50' cy='42' r='8' fill='%2334d399'/></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+    <script>
+        (function() {
+            if (localStorage.getItem('kontras-tinggi') === 'true') {
+                document.documentElement.classList.add('kontras-tinggi');
+            }
+            if (localStorage.getItem('text-besar') === 'true') {
+                document.documentElement.classList.add('text-besar');
+            }
+        })();
+    </script>
     <style>
         html { font-size: 16px; scroll-behavior: smooth; }
         html.text-besar { font-size: 19px; }
-        html.kontras-tinggi body { background: #0b0f19; color: #f3f4f6; }
-        html.kontras-tinggi .bg-white { background: #1f2937 !important; color: #f3f4f6 !important; border-color: #374151 !important; }
-        html.kontras-tinggi a { color: #34d399 !important; }
+        
+        /* Premium Dark Mode & High Contrast Design System */
+        html.kontras-tinggi body { 
+            background-color: #0b0f19 !important; 
+            color: #f1f5f9 !important; 
+        }
+
+        /* Card & Box Containers */
+        html.kontras-tinggi .bg-white,
+        html.kontras-tinggi .bg-slate-50,
+        html.kontras-tinggi .bg-slate-100,
+        html.kontras-tinggi .bg-slate-200,
+        html.kontras-tinggi article { 
+            background-color: #111827 !important; 
+            color: #f1f5f9 !important; 
+            border-color: #1f2937 !important; 
+        }
+
+        /* Text Contrast Overrides */
+        html.kontras-tinggi p,
+        html.kontras-tinggi label,
+        html.kontras-tinggi td,
+        html.kontras-tinggi th,
+        html.kontras-tinggi li,
+        html.kontras-tinggi span { color: #cbd5e1 !important; }
+
+        html.kontras-tinggi .bg-teal-50,
+        html.kontras-tinggi .bg-teal-50\/40 {
+            background-color: rgba(20, 184, 166, 0.15) !important;
+            color: #2dd4bf !important;
+            border-color: rgba(45, 212, 191, 0.3) !important;
+        }
+
+        html.kontras-tinggi .bg-indigo-50 {
+            background-color: rgba(99, 102, 241, 0.15) !important;
+            color: #818cf8 !important;
+            border-color: rgba(129, 140, 248, 0.3) !important;
+        }
+
+        html.kontras-tinggi .bg-pink-50 {
+            background-color: rgba(236, 72, 153, 0.15) !important;
+            color: #f472b6 !important;
+            border-color: rgba(244, 114, 182, 0.3) !important;
+        }
+        
+        html.kontras-tinggi h1,
+        html.kontras-tinggi h2,
+        html.kontras-tinggi h3,
+        html.kontras-tinggi h4,
+        html.kontras-tinggi h5,
+        html.kontras-tinggi h6,
+        html.kontras-tinggi .font-extrabold,
+        html.kontras-tinggi .font-bold { color: #f8fafc !important; }
+        
+        html.kontras-tinggi .text-slate-300,
+        html.kontras-tinggi .text-slate-400,
+        html.kontras-tinggi .text-slate-500,
+        html.kontras-tinggi .text-slate-600,
+        html.kontras-tinggi .text-slate-700,
+        html.kontras-tinggi .text-slate-800,
+        html.kontras-tinggi .text-slate-900 { color: #cbd5e1 !important; }
+
+        /* Icon Colors in Dark Mode */
+        html.kontras-tinggi i.ti,
+        html.kontras-tinggi [class*="ti-"] {
+            color: #34d399 !important;
+        }
+
+        /* Specific Status & Vibrant Icon Overrides */
+        html.kontras-tinggi .text-emerald-400,
+        html.kontras-tinggi .text-emerald-500,
+        html.kontras-tinggi .text-emerald-600,
+        html.kontras-tinggi .text-emerald-700,
+        html.kontras-tinggi .text-emerald-800,
+        html.kontras-tinggi .text-emerald-900,
+        html.kontras-tinggi .text-emerald-950,
+        html.kontras-tinggi .text-green-600,
+        html.kontras-tinggi .text-green-700,
+        html.kontras-tinggi .text-green-800,
+        html.kontras-tinggi .ti-check,
+        html.kontras-tinggi .ti-circle-check { color: #34d399 !important; }
+
+        html.kontras-tinggi .text-blue-500,
+        html.kontras-tinggi .text-blue-600,
+        html.kontras-tinggi .text-blue-700,
+        html.kontras-tinggi .text-blue-800,
+        html.kontras-tinggi .text-blue-900,
+        html.kontras-tinggi .ti-brand-whatsapp,
+        html.kontras-tinggi .ti-phone,
+        html.kontras-tinggi .ti-info-circle { color: #60a5fa !important; }
+
+        html.kontras-tinggi .text-purple-500,
+        html.kontras-tinggi .text-purple-600,
+        html.kontras-tinggi .text-purple-700,
+        html.kontras-tinggi .text-purple-800 { color: #c084fc !important; }
+
+        html.kontras-tinggi .text-amber-500,
+        html.kontras-tinggi .text-amber-600,
+        html.kontras-tinggi .text-amber-700,
+        html.kontras-tinggi .text-amber-800,
+        html.kontras-tinggi .text-amber-900,
+        html.kontras-tinggi .ti-alert-triangle,
+        html.kontras-tinggi .ti-star { color: #fbbf24 !important; }
+
+        html.kontras-tinggi .text-red-500,
+        html.kontras-tinggi .text-red-600,
+        html.kontras-tinggi .text-red-700,
+        html.kontras-tinggi .text-red-800,
+        html.kontras-tinggi .text-red-900,
+        html.kontras-tinggi .ti-alert-circle,
+        html.kontras-tinggi .ti-x,
+        html.kontras-tinggi .ti-trash { color: #f87171 !important; }
+
+        /* Icon Background Boxes / Badges */
+        html.kontras-tinggi .bg-emerald-50,
+        html.kontras-tinggi .bg-emerald-100,
+        html.kontras-tinggi .bg-green-50,
+        html.kontras-tinggi .bg-green-100,
+        html.kontras-tinggi .bg-emerald-500\/10 {
+            background-color: rgba(16, 185, 129, 0.2) !important;
+            color: #34d399 !important;
+            border-color: rgba(52, 211, 153, 0.4) !important;
+        }
+
+        html.kontras-tinggi .bg-blue-50,
+        html.kontras-tinggi .bg-blue-100 {
+            background-color: rgba(59, 130, 246, 0.2) !important;
+            color: #60a5fa !important;
+            border-color: rgba(96, 165, 250, 0.4) !important;
+        }
+
+        html.kontras-tinggi .bg-purple-50,
+        html.kontras-tinggi .bg-purple-100 {
+            background-color: rgba(168, 85, 247, 0.2) !important;
+            color: #c084fc !important;
+            border-color: rgba(192, 132, 252, 0.4) !important;
+        }
+
+        html.kontras-tinggi .bg-amber-50,
+        html.kontras-tinggi .bg-amber-100 {
+            background-color: rgba(245, 158, 11, 0.2) !important;
+            color: #fbbf24 !important;
+            border-color: rgba(251, 191, 36, 0.4) !important;
+        }
+
+        html.kontras-tinggi .bg-red-50,
+        html.kontras-tinggi .bg-red-100 {
+            background-color: rgba(239, 68, 68, 0.2) !important;
+            color: #f87171 !important;
+            border-color: rgba(248, 113, 113, 0.4) !important;
+        }
+
+        html.kontras-tinggi .bg-slate-50,
+        html.kontras-tinggi .bg-slate-100,
+        html.kontras-tinggi .bg-slate-200 {
+            background-color: #1e293b !important;
+            color: #e2e8f0 !important;
+            border-color: #334155 !important;
+        }
+
+        /* Links & Buttons */
+        html.kontras-tinggi a { color: #34d399 !important; text-decoration: none !important; }
+        html.kontras-tinggi a:hover { color: #6ee7b7 !important; }
+        
+        html.kontras-tinggi .nav-link { color: #cbd5e1 !important; }
+        html.kontras-tinggi .nav-link:hover,
+        html.kontras-tinggi .nav-link.active { color: #34d399 !important; }
+        html.kontras-tinggi .nav-link::after { background-color: #34d399 !important; }
+
+        html.kontras-tinggi header a,
+        html.kontras-tinggi nav a,
+        html.kontras-tinggi button { text-decoration: none !important; }
+
+        /* Header Glassmorphism in Dark Mode */
+        html.kontras-tinggi .glass-header {
+            background: rgba(15, 23, 42, 0.95) !important;
+            border-bottom: 1px solid #1f2937 !important;
+        }
+
+        /* Input Form & Input Icon Fixes */
+        html.kontras-tinggi input,
+        html.kontras-tinggi textarea,
+        html.kontras-tinggi select { 
+            background-color: #0f172a !important; 
+            color: #f8fafc !important; 
+            border-color: #334155 !important; 
+        }
+        
+        html.kontras-tinggi input:focus,
+        html.kontras-tinggi textarea:focus,
+        html.kontras-tinggi select:focus {
+            border-color: #34d399 !important;
+            box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.2) !important;
+        }
+
+        html.kontras-tinggi .relative i {
+            color: #34d399 !important;
+        }
+
+        /* Modals & Dialogs */
+        html.kontras-tinggi #modal-ajukan-surat > div,
+        html.kontras-tinggi #modal-preview > div,
+        html.kontras-tinggi #modal-berita > div {
+            background-color: #111827 !important;
+            border: 1px solid #374151 !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+        }
+
+        /* Text & Icon contrast override for dark mode buttons & badges */
+        html.kontras-tinggi .text-white,
+        html.kontras-tinggi .text-white * {
+            color: #ffffff !important;
+        }
+
+        /* Share Toast in High Contrast */
+        html.kontras-tinggi #share-toast > div {
+            background-color: #1e293b !important;
+            border-color: #475569 !important;
+            color: #f8fafc !important;
+        }
+
+        /* Mobile Menu */
+        html.kontras-tinggi #menu-mobile {
+            background-color: #111827 !important;
+            border-color: #1f2937 !important;
+        }
+        html.kontras-tinggi #menu-mobile a {
+            border-color: #1f2937 !important;
+            color: #e2e8f0 !important;
+        }
+        html.kontras-tinggi #menu-mobile a:hover {
+            color: #34d399 !important;
+        }
+
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass-header {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-        }
-        html.kontras-tinggi .glass-header {
-            background: rgba(31, 41, 55, 0.9);
         }
         .nav-link {
             position: relative;
@@ -45,6 +284,16 @@
         }
         .skip-link:focus { transform: translateY(0); }
     </style>
+    <script>
+        function toggleTextBesar() {
+            const isBig = document.documentElement.classList.toggle('text-besar');
+            localStorage.setItem('text-besar', isBig);
+        }
+        function toggleKontrasTinggi() {
+            const isHighContrast = document.documentElement.classList.toggle('kontras-tinggi');
+            localStorage.setItem('kontras-tinggi', isHighContrast);
+        }
+    </script>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-emerald-600 selection:text-white">
 
@@ -58,10 +307,10 @@
                 <span>Portal Resmi {{ ($profile ?? \App\Models\DesaProfile::current())->nama_desa }}</span>
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="document.documentElement.classList.toggle('text-besar')" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 transition flex items-center gap-1" aria-label="Perbesar atau perkecil ukuran huruf">
+                <button onclick="toggleTextBesar()" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 transition flex items-center gap-1" aria-label="Perbesar atau perkecil ukuran huruf">
                     <i class="ti ti-typography text-sm"></i> A+ / A-
                 </button>
-                <button onclick="document.documentElement.classList.toggle('kontras-tinggi')" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 transition flex items-center gap-1" aria-label="Ubah kontras tampilan">
+                <button onclick="toggleKontrasTinggi()" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 transition flex items-center gap-1" aria-label="Ubah kontras tampilan">
                     <i class="ti ti-contrast text-sm"></i> Kontras
                 </button>
             </div>
@@ -72,8 +321,12 @@
     <header class="glass-header shadow-sm border-b border-slate-100 sticky top-0 z-40 transition-all duration-300">
         <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="{{ route('home') }}" class="flex items-center gap-2.5 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform duration-300">
-                    <i class="ti ti-building-community text-xl" aria-hidden="true"></i>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                    @if(($profile ?? \App\Models\DesaProfile::current())->logo)
+                        <img src="{{ asset('storage/' . ($profile ?? \App\Models\DesaProfile::current())->logo) }}" class="w-full h-full object-cover">
+                    @else
+                        <i class="ti ti-building-community text-xl" aria-hidden="true"></i>
+                    @endif
                 </div>
                 <div class="flex flex-col">
                     <span class="font-extrabold text-base tracking-tight text-emerald-950 group-hover:text-emerald-800 transition-colors">{{ ($profile ?? \App\Models\DesaProfile::current())->nama_desa }}</span>
@@ -85,22 +338,27 @@
                 <i class="ti ti-menu-2 text-2xl"></i>
             </button>
             
-            <div class="hidden md:flex items-center gap-8 font-semibold text-sm text-slate-600">
+            <div class="hidden md:flex items-center gap-6 font-semibold text-sm text-slate-600">
                 <a href="{{ route('home') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('home') ? 'text-emerald-700 font-bold active' : '' }}">Beranda</a>
-                <a href="{{ route('profil') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('profil') ? 'text-emerald-700 font-bold active' : '' }}">Profil Desa</a>
+                <a href="{{ route('profil') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('profil') ? 'text-emerald-700 font-bold active' : '' }}">Profil</a>
+                <a href="{{ route('kegiatan.index') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('kegiatan.*') ? 'text-emerald-700 font-bold active' : '' }}">Agenda</a>
                 <a href="{{ route('berita.index') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('berita.*') ? 'text-emerald-700 font-bold active' : '' }}">Berita</a>
-                <a href="{{ route('layanan.index') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('layanan.*') ? 'text-emerald-700 font-bold active' : '' }}">Layanan Surat</a>
-                <a href="{{ route('layanan.cek-status') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('layanan.cek-status') ? 'text-emerald-700 font-bold active' : '' }}">Cek Status</a>
+                <a href="{{ route('galeri.index') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('galeri.*') ? 'text-emerald-700 font-bold active' : '' }}">Galeri</a>
+                <a href="{{ route('kontak.index') }}" class="nav-link hover:text-emerald-800 {{ request()->routeIs('kontak.*') ? 'text-emerald-700 font-bold active' : '' }}">Kontak</a>
+                <a href="{{ route('layanan.index') }}" class="px-4 py-2 rounded-xl bg-emerald-50 text-emerald-700 font-bold hover:bg-emerald-100 transition-colors">Layanan Surat</a>
             </div>
         </nav>
         
-        <!-- Mobile Menu (Removed Login Button) -->
+        <!-- Mobile Menu -->
         <div id="menu-mobile" class="hidden md:hidden border-t border-slate-100 px-6 py-4 flex flex-col gap-3 font-semibold text-slate-600 bg-white shadow-inner animate-fadeIn">
             <a href="{{ route('home') }}" class="py-2 border-b border-slate-50 hover:text-emerald-700">Beranda</a>
             <a href="{{ route('profil') }}" class="py-2 border-b border-slate-50 hover:text-emerald-700">Profil Desa</a>
-            <a href="{{ route('berita.index') }}" class="py-2 border-b border-slate-50 hover:text-emerald-700">Berita</a>
+            <a href="{{ route('kegiatan.index') }}" class="py-2 border-b border-slate-50 hover:text-emerald-700">Agenda Kegiatan</a>
+            <a href="{{ route('berita.index') }}" class="py-2 border-b border-slate-50 hover:text-emerald-700">Berita Desa</a>
+            <a href="{{ route('galeri.index') }}" class="py-2 border-b border-slate-50 hover:text-emerald-700">Galeri Foto</a>
+            <a href="{{ route('kontak.index') }}" class="py-2 border-b border-slate-50 hover:text-emerald-700">Kontak Penting</a>
             <a href="{{ route('layanan.index') }}" class="py-2 border-b border-slate-50 hover:text-emerald-700">Layanan Surat</a>
-            <a href="{{ route('layanan.cek-status') }}" class="py-2 hover:text-emerald-700">Cek Status</a>
+            <a href="{{ route('layanan.cek-status') }}" class="py-2 hover:text-emerald-700">Cek Status Surat</a>
         </div>
     </header>
 
@@ -164,11 +422,70 @@
             <div>
                 &copy; {{ date('Y') }} {{ ($profile ?? \App\Models\DesaProfile::current())->nama_desa }}. Hak Cipta Dilindungi.
             </div>
-            <div class="text-slate-600">
-                Sistem Informasi Desa &bull; Universitas
-            </div>
         </div>
     </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="share-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-slate-900 text-white border border-slate-700 rounded-2xl px-5 py-3.5 shadow-2xl flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                <i class="ti ti-circle-check text-xl"></i>
+            </div>
+            <div class="text-xs font-semibold" id="share-toast-msg">Link berhasil disalin!</div>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(text, customMessage = 'Tautan berhasil disalin!') {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(showToast).catch(fallbackCopy);
+            } else {
+                fallbackCopy();
+            }
+
+            function fallbackCopy() {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast();
+                } catch (err) {
+                    console.error('Gagal menyalin tautan:', err);
+                }
+                document.body.removeChild(textArea);
+            }
+
+            function showToast() {
+                const toast = document.getElementById('share-toast');
+                const toastMsg = document.getElementById('share-toast-msg');
+                if (toast && toastMsg) {
+                    toastMsg.innerText = customMessage;
+                    toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+                    setTimeout(() => {
+                        toast.classList.remove('translate-y-0', 'opacity-100');
+                        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                    }, 3000);
+                }
+            }
+        }
+
+        function shareToWhatsapp(title, url, extraInfo = '') {
+            let message = `*${title}*\n`;
+            if (extraInfo) {
+                message += `${extraInfo}\n`;
+            }
+            message += `\nSelengkapnya dapat dilihat pada tautan berikut:\n${url}`;
+            const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank', 'noopener,noreferrer');
+        }
+    </script>
 </body>
 </html>
 

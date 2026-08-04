@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin') — Sistem Informasi Desa</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23047857'/><path d='M30 70 L50 30 L70 70 Z' fill='%23ffffff'/><circle cx='50' cy='42' r='8' fill='%2334d399'/></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -55,6 +56,26 @@
             <a href="{{ route('admin.berita.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.berita.*') ? $active : $inactive }}">
                 <i class="ti ti-news text-lg"></i>
                 <span>Berita Desa</span>
+            </a>
+
+            <a href="{{ route('admin.kegiatan.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.kegiatan.*') ? $active : $inactive }}">
+                <i class="ti ti-calendar-event text-lg"></i>
+                <span>Agenda Kegiatan</span>
+            </a>
+
+            <a href="{{ route('admin.galeri.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.galeri.*') ? $active : $inactive }}">
+                <i class="ti ti-photo text-lg"></i>
+                <span>Galeri Foto</span>
+            </a>
+
+            <a href="{{ route('admin.kontak.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.kontak.*') ? $active : $inactive }}">
+                <i class="ti ti-phone text-lg"></i>
+                <span>Kontak Penting</span>
+            </a>
+            
+            <a href="{{ route('admin.profil.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.profil.*') ? $active : $inactive }}">
+                <i class="ti ti-building-community text-lg"></i>
+                <span>Informasi & Profil Desa</span>
             </a>
             
             <div class="pt-6 border-t border-emerald-900/60 mt-6">

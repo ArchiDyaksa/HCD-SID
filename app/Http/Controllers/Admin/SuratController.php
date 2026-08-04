@@ -23,6 +23,14 @@ class SuratController extends Controller
             });
         }
 
+        if ($dari = $request->get('dari_tanggal')) {
+            $query->whereDate('created_at', '>=', $dari);
+        }
+
+        if ($sampai = $request->get('sampai_tanggal')) {
+            $query->whereDate('created_at', '<=', $sampai);
+        }
+
         $surats = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.surat.index', compact('surats', 'status', 'search'));

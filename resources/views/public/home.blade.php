@@ -67,7 +67,100 @@
             </div>
         </div>
     </div>
+
+    <!-- Visualisasi Grafik Demografi Penduduk (HCD Feature) -->
+    <div class="mt-8 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 p-6 md:p-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
+            <div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-2">
+                    <i class="ti ti-chart-pie"></i> Visualisasi Data Kependudukan
+                </span>
+                <h3 class="text-xl md:text-2xl font-extrabold text-slate-800 tracking-tight">Grafik Demografi Penduduk</h3>
+                <p class="text-slate-400 text-xs md:text-sm mt-1">Perbandingan komposisi jenis kelamin warga {{ $profile->nama_desa }}</p>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-semibold">
+                <div class="flex items-center gap-2">
+                    <span class="w-3.5 h-3.5 rounded-full bg-blue-500 inline-block"></span>
+                    <span class="text-slate-700">Laki-laki ({{ $statistik['total_penduduk'] > 0 ? round(($statistik['laki_laki'] / $statistik['total_penduduk']) * 100, 1) : 0 }}%)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-3.5 h-3.5 rounded-full bg-pink-500 inline-block"></span>
+                    <span class="text-slate-700">Perempuan ({{ $statistik['total_penduduk'] > 0 ? round(($statistik['perempuan'] / $statistik['total_penduduk']) * 100, 1) : 0 }}%)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Canvas Chart.js -->
+            <div class="relative h-60 max-w-xs mx-auto w-full flex items-center justify-center">
+                <canvas id="chartGenderHome"></canvas>
+            </div>
+
+            <!-- Progress Bar & Detail Stat -->
+            <div class="space-y-5">
+                <div>
+                    <div class="flex justify-between text-sm font-bold mb-1.5">
+                        <span class="text-blue-700 flex items-center gap-1.5"><i class="ti ti-man"></i> Laki-laki</span>
+                        <span class="text-slate-800">{{ number_format($statistik['laki_laki']) }} Jiwa ({{ $statistik['total_penduduk'] > 0 ? round(($statistik['laki_laki'] / $statistik['total_penduduk']) * 100, 1) : 0 }}%)</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden p-0.5 border border-slate-200/60">
+                        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-full rounded-full transition-all duration-1000" style="width: {{ $statistik['total_penduduk'] > 0 ? round(($statistik['laki_laki'] / $statistik['total_penduduk']) * 100, 1) : 0 }}%"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-sm font-bold mb-1.5">
+                        <span class="text-pink-700 flex items-center gap-1.5"><i class="ti ti-woman"></i> Perempuan</span>
+                        <span class="text-slate-800">{{ number_format($statistik['perempuan']) }} Jiwa ({{ $statistik['total_penduduk'] > 0 ? round(($statistik['perempuan'] / $statistik['total_penduduk']) * 100, 1) : 0 }}%)</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden p-0.5 border border-slate-200/60">
+                        <div class="bg-gradient-to-r from-pink-500 to-rose-600 h-full rounded-full transition-all duration-1000" style="width: {{ $statistik['total_penduduk'] > 0 ? round(($statistik['perempuan'] / $statistik['total_penduduk']) * 100, 1) : 0 }}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById('chartGenderHome');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Laki-laki', 'Perempuan'],
+                    datasets: [{
+                        data: [{{ $statistik['laki_laki'] }}, {{ $statistik['perempuan'] }}],
+                        backgroundColor: ['#3b82f6', '#ec4899'],
+                        hoverBackgroundColor: ['#2563eb', '#db2777'],
+                        borderWidth: 3,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.raw || 0;
+                                    let total = {{ $statistik['total_penduduk'] > 0 ? $statistik['total_penduduk'] : 1 }};
+                                    let percentage = Math.round((value / total) * 100);
+                                    return ' ' + context.label + ': ' + value.toLocaleString('id-ID') + ' Jiwa (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+    });
+</script>
 
 <!-- Layanan Cepat Section -->
 <section class="max-w-6xl mx-auto px-6 py-24">
@@ -150,13 +243,26 @@
                     <h3 class="font-extrabold text-slate-800 text-lg leading-snug mb-3 group-hover:text-emerald-800 transition-colors">
                         <a href="{{ route('berita.show', $berita->slug) }}">{{ $berita->judul }}</a>
                     </h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-6 flex-grow">
-                        {{ Str::limit(strip_tags($berita->konten), 120) }}
-                    </p>
-                    <a href="{{ route('berita.show', $berita->slug) }}" class="inline-flex items-center gap-1 text-emerald-700 hover:text-emerald-800 font-extrabold text-xs group/btn">
-                        <span>Baca Selengkapnya</span>
-                        <i class="ti ti-chevron-right group-hover/btn:translate-x-0.5 transition-transform"></i>
-                    </a>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-100 gap-2 mt-auto">
+                        <div class="flex items-center gap-1">
+                            <button type="button" 
+                                    onclick="shareToWhatsapp('{{ addslashes($berita->judul) }}', '{{ route('berita.show', $berita->slug) }}', 'Berita Desa')"
+                                    title="Bagikan via WhatsApp"
+                                    class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-colors text-sm">
+                                <i class="ti ti-brand-whatsapp"></i>
+                            </button>
+                            <button type="button" 
+                                    onclick="copyToClipboard('{{ route('berita.show', $berita->slug) }}', 'Link berita berhasil disalin!')"
+                                    title="Salin Link"
+                                    class="w-7 h-7 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-700 hover:text-white flex items-center justify-center transition-colors text-sm">
+                                <i class="ti ti-link"></i>
+                            </button>
+                        </div>
+                        <a href="{{ route('berita.show', $berita->slug) }}" class="inline-flex items-center gap-1 text-emerald-700 hover:text-emerald-800 font-extrabold text-xs group/btn">
+                            <span>Baca Selengkapnya</span>
+                            <i class="ti ti-chevron-right group-hover/btn:translate-x-0.5 transition-transform"></i>
+                        </a>
+                    </div>
                 </div>
             </article>
             @endforeach

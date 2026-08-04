@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToDesa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Penduduk extends Model
 {
-    use HasFactory;
+    use BelongsToDesa, HasFactory;
 
     protected $fillable = [
+        'desa_profile_id',
         'nik',
         'no_kk',
         'nama',

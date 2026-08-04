@@ -13,7 +13,10 @@ class BeritaController extends Controller
         $query = Berita::terbit();
 
         if ($search = $request->get('q')) {
-            $query->where('judul', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                  ->orWhere('konten', 'like', "%{$search}%");
+            });
         }
 
         if ($kategori = $request->get('kategori')) {
@@ -21,7 +24,7 @@ class BeritaController extends Controller
         }
 
         $beritas = $query->latest('tanggal_publish')->paginate(9)->withQueryString();
-        $kategoriList = Berita::terbit()->distinct()->pluck('kategori');
+        $kategoriList = Berita::terbit()->whereNotNull('kategori')->where('kategori', '!=', '')->distinct()->pluck('kategori');
 
         return view('public.berita.index', compact('beritas', 'kategoriList', 'search', 'kategori'));
     }

@@ -4,10 +4,14 @@
 
 @section('content')
 <!-- Header Section -->
-<section class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white py-16">
-    <div class="max-w-xl mx-auto px-6 text-center">
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Pelacakan Status Surat</h1>
-        <p class="text-emerald-100 mt-2 text-sm md:text-base font-medium">Pantau tahap pengerjaan surat permohonan Anda secara langsung.</p>
+<section class="relative bg-gradient-to-br from-emerald-950 via-teal-900 to-slate-900 text-white py-16 px-6 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(16,185,129,0.15),transparent_50%)]"></div>
+    <div class="max-w-6xl mx-auto relative z-10 text-center">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-extrabold uppercase tracking-widest mb-4">
+            <i class="ti ti-search"></i> Pelacakan Online
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Pelacakan Status Surat</h1>
+        <p class="text-slate-300 text-sm md:text-base max-w-2xl mx-auto mt-3">Pantau tahap pengerjaan permohonan surat Anda secara langsung dan real-time.</p>
     </div>
 </section>
 
@@ -64,11 +68,19 @@
                     @endphp
 
                     @if($surat->status === 'ditolak')
-                        <div class="bg-red-50 border border-red-200/80 rounded-2xl p-5 flex items-start gap-3">
-                            <i class="ti ti-circle-x text-2xl text-red-600 mt-0.5"></i>
-                            <div>
-                                <h4 class="font-bold text-red-900 text-sm">Pengajuan Ditolak</h4>
-                                <p class="text-xs text-red-700/90 mt-1">Maaf, permohonan surat Anda ditolak. Silakan hubungi kantor desa atau periksa catatan di bawah.</p>
+                        <div class="bg-red-50 border border-red-200/80 rounded-2xl p-5 space-y-3">
+                            <div class="flex items-start gap-3">
+                                <i class="ti ti-circle-x text-2xl text-red-600 mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold text-red-900 text-sm">Pengajuan Ditolak / Perlu Revisi</h4>
+                                    <p class="text-xs text-red-700/90 mt-1">Maaf, permohonan surat Anda belum dapat diproses. Silakan periksa catatan dari admin di bawah dan ajukan revisi data Anda.</p>
+                                </div>
+                            </div>
+                            <div class="pt-2 border-t border-red-200/60 flex justify-end">
+                                <a href="{{ route('layanan.form', $surat->jenis_surat_id) }}" class="bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5 shadow-sm">
+                                    <i class="ti ti-refresh"></i>
+                                    <span>Ajukan Ulang / Revisi Permohonan</span>
+                                </a>
                             </div>
                         </div>
                     @else
@@ -90,8 +102,31 @@
                     @endif
                 </div>
 
+                @if($surat->status === 'selesai')
+                    <!-- Completed Banner & Download Option -->
+                    <div class="bg-emerald-50 border border-emerald-200/80 rounded-2xl p-5 space-y-4">
+                        <div class="flex items-start gap-3">
+                            <i class="ti ti-circle-check text-3xl text-emerald-600"></i>
+                            <div>
+                                <h4 class="font-extrabold text-emerald-900 text-sm">Surat Selesai & Ready!</h4>
+                                <p class="text-xs text-emerald-800/90 mt-0.5">Surat permohonan Anda telah disetujui dan diterbitkan secara resmi. Anda dapat mengunduh/mencetak dokumen secara langsung atau mengambil fisik surat di Kantor Desa.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-emerald-200/60">
+                            <div class="text-[11px] font-medium text-emerald-800 flex items-center gap-1">
+                                <i class="ti ti-building-community text-emerald-600 text-sm"></i>
+                                <span>Kantor Desa {{ ($profile ?? \App\Models\DesaProfile::current())->nama_desa }} (Jam Kerja: 08.00 - 15.00 WIB)</span>
+                            </div>
+                            <a href="{{ route('layanan.cetak', $surat->kode_tracking) }}" target="_blank" class="bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold px-6 py-2.5 rounded-xl text-xs shadow-md transition-all flex items-center gap-2">
+                                <i class="ti ti-printer text-sm"></i>
+                                <span>Cetak / Unduh Surat Resmi (PDF)</span>
+                            </a>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Detail Metadata -->
-                <div class="bg-slate-50/70 border border-slate-100 rounded-2xl p-5 space-y-3 text-xs">
+                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-5 space-y-3 text-xs">
                     <div class="flex justify-between border-b border-slate-200/60 pb-2">
                         <span class="text-slate-400">Nama Pemohon:</span>
                         <span class="font-bold text-slate-700">{{ $surat->nama_pemohon }}</span>

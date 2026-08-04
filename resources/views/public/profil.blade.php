@@ -4,10 +4,13 @@
 
 @section('content')
 <!-- Header Section -->
-<section class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white py-16">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Profil {{ $profile->nama_desa }}</h1>
-        <p class="text-emerald-100 mt-2 text-sm md:text-base font-medium">
+<section class="relative bg-gradient-to-br from-emerald-950 via-teal-900 to-slate-900 text-white py-16 px-6 overflow-hidden">
+    <div class="max-w-6xl mx-auto relative z-10 text-center">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-extrabold uppercase tracking-widest mb-4">
+            <i class="ti ti-photo-heart"></i> Profil Desa
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Profil {{ $profile->nama_desa }}</h1>
+        <p class="text-slate-300 text-sm md:text-base max-w-2xl mx-auto mt-3">
             <i class="ti ti-map-pin"></i> {{ $profile->kecamatan }}, {{ $profile->kabupaten }}, {{ $profile->provinsi }}
         </p>
     </div>

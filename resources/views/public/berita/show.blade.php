@@ -40,6 +40,28 @@
         {{ $berita->konten }}
     </div>
 
+    <!-- Share Section -->
+    <div class="mt-8 bg-gradient-to-r from-emerald-900 to-teal-900 text-white rounded-3xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+            <h3 class="font-extrabold text-base tracking-tight mb-1 flex items-center gap-2">
+                <i class="ti ti-share text-emerald-400 text-lg"></i> Bagikan Berita Ini
+            </h3>
+            <p class="text-xs text-slate-300">Sebarkan informasi penting ini ke warga desa melalui WhatsApp atau salin link.</p>
+        </div>
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+            <button onclick="shareToWhatsapp('{{ addslashes($berita->judul) }}', '{{ url()->current() }}', 'Berita Resmi Desa')" 
+                    class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs px-5 py-3 rounded-2xl shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all">
+                <i class="ti ti-brand-whatsapp text-lg"></i>
+                <span>Bagikan WA</span>
+            </button>
+            <button onclick="copyToClipboard('{{ url()->current() }}', 'Link berita berhasil disalin!')" 
+                    class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-5 py-3 rounded-2xl border border-white/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                <i class="ti ti-link text-lg"></i>
+                <span>Salin Link</span>
+            </button>
+        </div>
+    </div>
+
     <!-- Related News -->
     @if ($terkait->count())
     <div class="mt-16 pt-8 border-t border-slate-100">
