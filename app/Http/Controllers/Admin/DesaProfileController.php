@@ -20,8 +20,6 @@ class DesaProfileController extends Controller
     {
         $data = $request->validate([
             'nama_desa' => 'required|string|max:255',
-            'nama_kepala_desa' => 'nullable|string|max:255',
-            'nip_kepala_desa' => 'nullable|string|max:255',
             'kecamatan' => 'nullable|string|max:255',
             'kabupaten' => 'nullable|string|max:255',
             'provinsi' => 'nullable|string|max:255',
