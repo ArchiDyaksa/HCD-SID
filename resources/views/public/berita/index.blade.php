@@ -57,11 +57,11 @@
     @else
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             @foreach ($beritas as $berita)
-            <article class="bg-white border border-slate-100 rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-slate-200/60 hover:-translate-y-1.5 transition-all duration-300 flex flex-col group">
+            <article class="bg-white border border-slate-100 rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-slate-200/60 hover:-translate-y-1.5 hover:border-emerald-200 transition-all duration-300 flex flex-col group">
                 <div class="h-52 bg-slate-100 overflow-hidden relative cursor-pointer"
                      onclick="openBeritaModal('{{ $berita->gambar ? asset('storage/' . $berita->gambar) : '' }}', '{{ addslashes($berita->judul) }}', '{{ $berita->kategori }}', '{{ $berita->tanggal_publish?->translatedFormat('d F Y') }}', '{{ $berita->dilihat }}', '{{ addslashes(strip_tags($berita->konten)) }}', '{{ route('berita.show', $berita->slug) }}')">
                     @if($berita->gambar)
-                        <img src="{{ asset('storage/' . $berita->gambar) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $berita->judul }}">
+                        <img src="{{ asset('storage/' . $berita->gambar) }}" class="w-full h-full object-cover" alt="{{ $berita->judul }}">
                     @else
                         <div class="w-full h-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
                             <i class="ti ti-photo-off text-4xl"></i>

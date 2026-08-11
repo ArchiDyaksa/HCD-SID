@@ -13,7 +13,7 @@
     <p class="text-slate-400 text-sm mb-10 max-w-md mx-auto">Simpan kode pelacakan berikut untuk memeriksa status pengajuan surat Anda kapan saja di menu Cek Status.</p>
 
     <!-- Tracking Code Box -->
-    <div class="bg-gradient-to-br from-emerald-50 to-teal-50/50 border-2 border-dashed border-emerald-300 rounded-3xl p-8 mb-8 relative group">
+    <div class="bg-emerald-50/80 border-2 border-dashed border-emerald-300 rounded-3xl p-8 mb-8 relative group">
         <div class="text-xs font-bold text-emerald-800 uppercase tracking-widest mb-2">Kode Pelacakan Anda</div>
         <div class="text-3xl md:text-4xl font-mono font-extrabold text-emerald-900 tracking-wider my-3" id="tracking-code">{{ $surat->kode_tracking }}</div>
         

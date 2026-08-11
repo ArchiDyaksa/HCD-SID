@@ -20,20 +20,32 @@ class DesaProfileController extends Controller
     {
         $data = $request->validate([
             'nama_desa' => 'required|string|max:255',
+            'nama_kepala_desa' => 'nullable|string|max:255',
+            'nip_kepala_desa' => 'nullable|string|max:255',
             'kecamatan' => 'nullable|string|max:255',
             'kabupaten' => 'nullable|string|max:255',
             'provinsi' => 'nullable|string|max:255',
             'luas_wilayah' => 'nullable|string|max:255',
             'alamat_kantor' => 'nullable|string|max:255',
+            'peta_embed' => 'nullable|string',
             'no_telp' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'sejarah' => 'nullable|string',
             'visi' => 'nullable|string',
             'misi' => 'nullable|string',
             'logo' => 'nullable|image|max:500',
+            'struktur_organisasi' => 'nullable|image|max:1024',
         ]);
 
         $data['slug'] = Str::slug($request->nama_desa);
+
+        // Ekstrak URL iframe jika admin menempelkan full tag <iframe src="...">
+        if (!empty($data['peta_embed'])) {
+            $embed = trim($data['peta_embed']);
+            if (preg_match('/src=["\']([^"\']+)["\']/', $embed, $matches)) {
+                $data['peta_embed'] = $matches[1];
+            }
+        }
 
         $profile = DesaProfile::current();
 
@@ -51,9 +63,23 @@ class DesaProfileController extends Controller
             $data['logo'] = $request->file('logo')->store('logo', 'public');
         }
 
+        if ($request->boolean('hapus_struktur') && $profile->struktur_organisasi) {
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($profile->struktur_organisasi)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($profile->struktur_organisasi);
+            }
+            $data['struktur_organisasi'] = null;
+        }
+
+        if ($request->hasFile('struktur_organisasi')) {
+            if ($profile->struktur_organisasi && \Illuminate\Support\Facades\Storage::disk('public')->exists($profile->struktur_organisasi)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($profile->struktur_organisasi);
+            }
+            $data['struktur_organisasi'] = $request->file('struktur_organisasi')->store('struktur', 'public');
+        }
+
         $profile->update($data);
 
-        return redirect()->route('admin.profil.edit')->with('success', 'Informasi, Logo & Profil Desa berhasil diperbarui.');
+        return redirect()->route('admin.profil.edit')->with('success', 'Informasi, Logo, Peta Wilayah & Struktur Desa berhasil diperbarui.');
     }
 
     public function deleteLogo()
@@ -68,5 +94,19 @@ class DesaProfileController extends Controller
         }
 
         return redirect()->route('admin.profil.edit')->with('success', 'Logo desa saat ini berhasil dihapus.');
+    }
+
+    public function deleteStruktur()
+    {
+        $profile = DesaProfile::current();
+
+        if ($profile->struktur_organisasi) {
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($profile->struktur_organisasi)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($profile->struktur_organisasi);
+            }
+            $profile->update(['struktur_organisasi' => null]);
+        }
+
+        return redirect()->route('admin.profil.edit')->with('success', 'Bagan struktur organisasi desa berhasil dihapus.');
     }
 }

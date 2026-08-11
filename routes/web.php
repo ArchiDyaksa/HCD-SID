@@ -87,6 +87,7 @@ Route::prefix('{desa_slug}/admin')->name('admin.')->middleware(['auth', 'admin']
     Route::get('profil', [DesaProfileController::class, 'edit'])->name('profil.edit');
     Route::put('profil', [DesaProfileController::class, 'update'])->name('profil.update');
     Route::delete('profil/logo', [DesaProfileController::class, 'deleteLogo'])->name('profil.delete-logo');
+    Route::delete('profil/struktur', [DesaProfileController::class, 'deleteStruktur'])->name('profil.delete-struktur');
 });
 
 /*

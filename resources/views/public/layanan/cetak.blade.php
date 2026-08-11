@@ -102,8 +102,10 @@
                     </div>
                 </div>
 
-                <p class="font-bold underline uppercase text-sm">BUDI SANTOSO</p>
-                <p class="text-xs text-slate-500">NIP. 19780512 200501 1 003</p>
+                <p class="font-bold underline uppercase text-sm">{{ strtoupper($profile->nama_kepala_desa ?: 'BUDI SANTOSO') }}</p>
+                @if($profile->nip_kepala_desa)
+                    <p class="text-xs text-slate-500">NIP. {{ $profile->nip_kepala_desa }}</p>
+                @endif
             </div>
         </div>
     </div>

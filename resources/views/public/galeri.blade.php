@@ -48,10 +48,10 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         @forelse ($galeris as $galeri)
         <div onclick="openGaleriModal('{{ $galeri->foto ? asset('storage/' . $galeri->foto) : '' }}', '{{ addslashes($galeri->judul) }}', '{{ $galeri->kategori }}', '{{ $galeri->tanggal ? $galeri->tanggal->translatedFormat('d F Y') : '-' }}', '{{ addslashes($galeri->deskripsi ?: 'Tidak ada deskripsi tambahan.') }}')"
-             class="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/30 overflow-hidden group hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 cursor-pointer">
+             class="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/30 overflow-hidden group hover:-translate-y-1 hover:border-emerald-200 hover:shadow-2xl transition-all duration-300 cursor-pointer">
             <div class="h-52 bg-slate-100 overflow-hidden relative">
                 @if ($galeri->foto)
-                    <img src="{{ asset('storage/' . $galeri->foto) }}" alt="{{ $galeri->judul }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="{{ asset('storage/' . $galeri->foto) }}" alt="{{ $galeri->judul }}" class="w-full h-full object-cover">
                 @else
                     <div class="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50 text-4xl">
                         <i class="ti ti-photo"></i>

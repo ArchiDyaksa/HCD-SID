@@ -47,7 +47,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse ($kegiatans as $kegiatan)
-        <div id="kegiatan-{{ $kegiatan->id }}" class="scroll-mt-28 bg-white rounded-3xl border border-slate-100 p-6 shadow-xl shadow-slate-200/30 hover:scale-[1.02] transition-all flex flex-col justify-between">
+        <div id="kegiatan-{{ $kegiatan->id }}" class="scroll-mt-28 bg-white rounded-3xl border border-slate-100 p-6 shadow-xl shadow-slate-200/30 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between gap-3 mb-4">
                     <span class="px-3.5 py-1.5 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-extrabold flex items-center gap-1.5">

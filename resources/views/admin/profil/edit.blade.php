@@ -30,6 +30,20 @@
                 </div>
 
                 <div>
+                    <label class="block font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Kepala Desa (Penandatangan Dokumen)</label>
+                    <input type="text" name="nama_kepala_desa" value="{{ old('nama_kepala_desa', $profile->nama_kepala_desa) }}" placeholder="Contoh: H. AHMAD RIFAI, S.Sos."
+                           class="w-full border border-slate-200 rounded-2xl px-4 py-3 font-semibold focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none">
+                    @error('nama_kepala_desa') <p class="text-red-600 text-[11px] mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 uppercase tracking-wider mb-2">NIP / Nomor Identitas Kepala Desa (Opsional)</label>
+                    <input type="text" name="nip_kepala_desa" value="{{ old('nip_kepala_desa', $profile->nip_kepala_desa) }}" placeholder="Contoh: 19800512 200501 1 003"
+                           class="w-full border border-slate-200 rounded-2xl px-4 py-3 font-semibold focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none">
+                    @error('nip_kepala_desa') <p class="text-red-600 text-[11px] mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
                     <label class="block font-bold text-slate-700 uppercase tracking-wider mb-2">Logo Resmi Desa (Gambar)</label>
                     <input type="file" name="logo" accept="image/*"
                            class="w-full border border-slate-200 rounded-2xl p-2.5 file:mr-4 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700">
@@ -91,6 +105,24 @@
                            class="w-full border border-slate-200 rounded-2xl px-4 py-3 font-semibold focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none">
                 </div>
 
+                <div class="md:col-span-2">
+                    <label class="block font-bold text-slate-700 uppercase tracking-wider mb-2">
+                        Peta Wilayah & Koordinat Balai Desa (Google Maps Embed URL / Iframe)
+                    </label>
+                    <input type="text" name="peta_embed" value="{{ old('peta_embed', $profile->peta_embed) }}" 
+                           placeholder="Contoh: https://www.google.com/maps/embed?pb=... atau tempelkan seluruh kode <iframe>"
+                           class="w-full border border-slate-200 rounded-2xl px-4 py-3 font-semibold focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none text-xs">
+                    <p class="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
+                        <i class="ti ti-info-circle text-emerald-600"></i>
+                        <span>Buka Google Maps &rarr; Bagikan (*Share*) &rarr; Sematkan Peta (*Embed a map*) &rarr; Salin HTML atau URL sematan ke kolom ini.</span>
+                    </p>
+                    @if($profile->peta_embed)
+                        <div class="mt-3 rounded-2xl overflow-hidden border border-slate-200 h-44 bg-slate-100">
+                            <iframe src="{{ $profile->peta_embed }}" class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    @endif
+                </div>
+
                 <div>
                     <label class="block font-bold text-slate-700 uppercase tracking-wider mb-2">Nomor Telepon Kantor</label>
                     <input type="text" name="no_telp" value="{{ old('no_telp', $profile->no_telp) }}"
@@ -101,6 +133,40 @@
                     <label class="block font-bold text-slate-700 uppercase tracking-wider mb-2">Email Resmi Desa</label>
                     <input type="email" name="email" value="{{ old('email', $profile->email) }}"
                            class="w-full border border-slate-200 rounded-2xl px-4 py-3 font-semibold focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none">
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktur Organisasi Aparatur Desa -->
+        <div>
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+                <i class="ti ti-users-group text-emerald-600 text-base"></i> Struktur Kepengurusan Aparatur Desa
+            </h3>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 uppercase tracking-wider mb-2">Bagan / Foto Struktur Organisasi Aparatur Desa (Gambar PNG/JPG/WebP, Maks 1 MB)</label>
+                    <input type="file" name="struktur_organisasi" accept="image/*"
+                           class="w-full border border-slate-200 rounded-2xl p-2.5 file:mr-4 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700">
+                    @error('struktur_organisasi') <p class="text-red-600 text-[11px] mt-1">{{ $message }}</p> @enderror
+
+                    @if($profile->struktur_organisasi)
+                        <div class="mt-4 p-4 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ asset('storage/' . $profile->struktur_organisasi) }}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 bg-white shadow-sm" alt="Bagan Struktur Organisasi">
+                                <div>
+                                    <span class="block font-bold text-slate-800 text-xs">Bagan Struktur Aparatur Desa Saat Ini</span>
+                                    <span class="block text-[11px] text-slate-400">Tersimpan di sistem storage dan tampil di profil publik</span>
+                                </div>
+                            </div>
+                            <button type="button" 
+                                    onclick="if(confirm('Apakah Anda yakin ingin menghapus gambar bagan struktur organisasi desa?')) document.getElementById('form-delete-struktur').submit();"
+                                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 font-bold text-xs border border-red-200/60 transition-colors">
+                                <i class="ti ti-trash text-sm"></i>
+                                <span>Hapus Bagan</span>
+                            </button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -143,6 +209,13 @@
 
     @if($profile->logo)
         <form id="form-delete-logo" action="{{ route('admin.profil.delete-logo') }}" method="POST" class="hidden">
+            @csrf
+            @method('DELETE')
+        </form>
+    @endif
+
+    @if($profile->struktur_organisasi)
+        <form id="form-delete-struktur" action="{{ route('admin.profil.delete-struktur') }}" method="POST" class="hidden">
             @csrf
             @method('DELETE')
         </form>
