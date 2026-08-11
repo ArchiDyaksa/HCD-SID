@@ -16,7 +16,6 @@
     </style>
 </head>
 <body class="p-4 md:p-10">
-
     <!-- Action Bar (No Print) -->
     <div class="no-print max-w-4xl mx-auto mb-6 flex justify-between items-center bg-slate-900 text-white p-4 rounded-2xl shadow-lg font-sans text-xs font-bold">
         <a href="{{ route('layanan.cek-status') }}" class="hover:text-emerald-400 flex items-center gap-1">
@@ -28,7 +27,6 @@
             </button>
         </div>
     </div>
-
     <!-- Letter Container -->
     @php
         $cleanKabupaten = trim(preg_replace('/^(kabupaten|kab\.)\s+/i', '', $profile->kabupaten ?? ''));
@@ -42,18 +40,15 @@
             <h2 class="text-xl md:text-2xl font-extrabold uppercase tracking-widest mt-1">{{ strtoupper($profile->nama_desa) }}</h2>
             <p class="text-xs font-normal italic mt-1 text-slate-600">{{ $profile->alamat_kantor }} &bull; Telp: {{ $profile->no_telp }} &bull; Email: {{ $profile->email }}</p>
         </div>
-
         <!-- Title & Number -->
         <div class="text-center mb-8">
             <h1 class="text-lg font-bold uppercase underline tracking-wide">{{ strtoupper($surat->jenisSurat->nama_surat) }}</h1>
             <p class="text-xs font-bold mt-1">Nomor: {{ $surat->nomor_surat ?: '470 / '.substr($surat->kode_tracking, 4).' / '.date('Y') }}</p>
         </div>
-
         <!-- Body Content -->
         <p class="mb-4 text-justify indent-8">
             Yang bertanda tangan di bawah ini Kepala Desa {{ $profile->nama_desa }}, Kecamatan {{ $cleanKecamatan }}, Kabupaten {{ $cleanKabupaten }}, menerangkan dengan sebenarnya bahwa:
         </p>
-
         <table class="w-full my-4 ml-6 text-sm">
             <tr class="py-1">
                 <td class="w-44 py-1 font-semibold">Nama Lengkap</td>
@@ -81,15 +76,12 @@
                 <td class="py-1 font-mono font-bold text-emerald-800">{{ $surat->kode_tracking }}</td>
             </tr>
         </table>
-
         <p class="mb-4 text-justify indent-8">
             Orang tersebut di atas adalah benar-benar warga penduduk Desa {{ $profile->nama_desa }} yang berkelakuan baik. Surat keterangan ini diberikan kepada yang bersangkutan untuk dipergunakan sebagaimana mestinya.
         </p>
-
         <p class="mb-10 text-justify indent-8">
             Demikian surat keterangan ini dibuat dengan sebenarnya untuk dapat dipergunakan sebagaimana mestinya.
         </p>
-
         <!-- Signature Footer -->
         <div class="flex justify-end mt-12 text-center">
             <div class="w-64">
@@ -101,7 +93,8 @@
                         [ STEMPEL & TANDA TANGAN RESMI PEMDES ]
                     </div>
                 </div>
-
+                <p class="font-bold underline uppercase text-sm">BUDI SANTOSO</p>
+                <p class="text-xs text-slate-500">NIP. 19780512 200501 1 003</p>
                 <p class="font-bold underline uppercase text-sm">{{ strtoupper($profile->nama_kepala_desa ?: 'BUDI SANTOSO') }}</p>
                 @if($profile->nip_kepala_desa)
                     <p class="text-xs text-slate-500">NIP. {{ $profile->nip_kepala_desa }}</p>
@@ -109,6 +102,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>

@@ -1,7 +1,5 @@
 @extends('layouts.public')
-
 @section('title', 'Profil Desa — ' . $profile->nama_desa)
-
 @section('content')
 <!-- Header Section -->
 <section class="relative bg-gradient-to-br from-emerald-950 via-teal-900 to-slate-900 text-white py-16 px-6 overflow-hidden">
@@ -15,7 +13,6 @@
         </p>
     </div>
 </section>
-
 <section class="max-w-4xl mx-auto px-6 py-12 -mt-8 relative z-10">
     <!-- Quick Info Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
@@ -43,7 +40,6 @@
             <div class="text-xs text-slate-400 font-semibold mt-1">Email Resmi</div>
         </div>
     </div>
-
     <!-- Main Content Cards -->
     <div class="space-y-8">
         <!-- Sejarah -->
@@ -56,7 +52,6 @@
             </div>
             <p class="text-slate-600 leading-relaxed text-sm whitespace-pre-line border-l-4 border-emerald-500 pl-4 py-1">{{ $profile->sejarah ?: 'Belum ada data.' }}</p>
         </div>
-
         <!-- Visi & Misi -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Visi -->
@@ -71,7 +66,6 @@
                     "{{ $profile->visi ?: 'Belum ada data.' }}"
                 </p>
             </div>
-
             <!-- Misi -->
             <div class="bg-white rounded-3xl border border-slate-100 shadow-lg shadow-slate-200/40 p-8">
                 <div class="flex items-center gap-3 mb-6">
@@ -97,7 +91,6 @@
                 </ul>
             </div>
         </div>
-
         <!-- Struktur Kepengurusan Aparatur Desa -->
         <div class="bg-white rounded-3xl border border-slate-100 shadow-lg shadow-slate-200/40 p-8">
             <div class="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100 flex-wrap">
@@ -118,7 +111,6 @@
                     </button>
                 @endif
             </div>
-
             @if($profile->struktur_organisasi)
                 <div class="rounded-2xl overflow-hidden border border-slate-100 bg-slate-50 relative group cursor-pointer"
                      onclick="openStrukturModal('{{ asset('storage/' . $profile->struktur_organisasi) }}')">
@@ -140,7 +132,6 @@
                         <span class="block font-extrabold text-slate-800 text-sm">{{ $profile->nama_kepala_desa ?: 'Kepala Desa' }}</span>
                         <span class="text-slate-500 text-[11px]">{{ $profile->nama_kepala_desa ? 'Kepala Desa ' . $profile->nama_desa : 'Pimpinan Pemerintah Desa' }}</span>
                     </div>
-
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
                         <div class="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-base mx-auto mb-2">
                             <i class="ti ti-briefcase"></i>
@@ -148,7 +139,6 @@
                         <span class="block font-bold text-slate-800">Sekretaris Desa</span>
                         <span class="text-slate-400 text-[10px]">Administrasi & Pelayanan</span>
                     </div>
-
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
                         <div class="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-base mx-auto mb-2">
                             <i class="ti ti-coins"></i>
@@ -156,7 +146,6 @@
                         <span class="block font-bold text-slate-800">Kaur Keuangan</span>
                         <span class="text-slate-400 text-[10px]">Pengelolaan Anggaran Desa</span>
                     </div>
-
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
                         <div class="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-base mx-auto mb-2">
                             <i class="ti ti-file-text"></i>
@@ -167,7 +156,6 @@
                 </div>
             @endif
         </div>
-
         <!-- Alamat Kantor & Peta Lokasi Wilayah -->
         <div class="bg-white rounded-3xl border border-slate-100 shadow-lg shadow-slate-200/40 p-8">
             <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
@@ -180,20 +168,17 @@
                         <p class="text-xs text-slate-400 mt-0.5">{{ $profile->alamat_kantor ?: 'Balai Desa ' . $profile->nama_desa }}</p>
                     </div>
                 </div>
-
                 @php
                     $mapsQuery = ($profile->alamat_kantor ?: '') . ' ' . $profile->nama_desa . ' ' . ($profile->kecamatan ?: '') . ' ' . ($profile->kabupaten ?: '');
                     $directMapsUrl = "https://www.google.com/maps/search/?api=1&query=" . urlencode($mapsQuery);
                     $embedMapSrc = $profile->peta_embed ?: "https://maps.google.com/maps?q=" . urlencode($mapsQuery) . "&t=&z=15&ie=UTF8&iwloc=&output=embed";
                 @endphp
-
                 <a href="{{ $directMapsUrl }}" target="_blank" rel="noopener noreferrer"
                    class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs transition-colors shadow-sm">
                     <i class="ti ti-brand-google-maps text-base"></i>
                     <span>Buka di Google Maps</span>
                 </a>
             </div>
-
             <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-inner h-80 bg-slate-100 relative">
                 <iframe src="{{ $embedMapSrc }}" 
                         class="w-full h-full border-0" 
@@ -202,7 +187,6 @@
                         referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
-
             <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 bg-slate-50 p-4 rounded-2xl border border-slate-100">
                 <div class="flex items-center gap-2">
                     <i class="ti ti-building-community text-emerald-600 text-base"></i>
@@ -216,7 +200,6 @@
         </div>
     </div>
 </section>
-
 <!-- Lightbox Modal untuk Bagan Struktur -->
 <div id="modal-struktur" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 transition-all duration-300">
     <div class="relative max-w-5xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl p-4 flex flex-col max-h-[90vh]">
@@ -234,7 +217,6 @@
         </div>
     </div>
 </div>
-
 <script>
     function openStrukturModal(imgUrl) {
         document.getElementById('modal-struktur-img').src = imgUrl;
@@ -242,7 +224,6 @@
         modal.classList.remove('hidden');
         modal.classList.add('flex');
     }
-
     function closeStrukturModal() {
         const modal = document.getElementById('modal-struktur');
         modal.classList.add('hidden');
@@ -250,4 +231,3 @@
     }
 </script>
 @endsection
-
