@@ -15,12 +15,43 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::firstOrCreate(
-            ['email' => 'admin@desa.id'],
+        $kalakijo = DesaProfile::firstOrCreate(
+            ['slug' => 'kalakijo'],
             [
-                'name' => 'Admin Desa',
+                'nama_desa' => 'Kalakijo',
+                'kecamatan' => 'Triharjo',
+                'kabupaten' => 'Sleman',
+                'provinsi' => 'Daerah Istimewa Yogyakarta',
+            ]
+        );
+
+        $jongke = DesaProfile::firstOrCreate(
+            ['slug' => 'jongke'],
+            [
+                'nama_desa' => 'Jongke',
+                'kecamatan' => 'Sendangadi',
+                'kabupaten' => 'Sleman',
+                'provinsi' => 'Daerah Istimewa Yogyakarta',
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'admin.kalakijo@desa.id'],
+            [
+                'name' => 'Admin Desa Kalakijo',
                 'password' => Hash::make('password'),
                 'role' => 'admin',
+                'desa_profile_id' => $kalakijo->id,
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'admin.jongke@desa.id'],
+            [
+                'name' => 'Admin Desa Jongke',
+                'password' => Hash::make('password'),
+                'role' => 'admin',
+                'desa_profile_id' => $jongke->id,
             ]
         );
 

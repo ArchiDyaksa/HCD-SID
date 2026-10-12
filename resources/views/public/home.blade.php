@@ -14,10 +14,6 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-6 relative z-30 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-800/60 border border-emerald-500/40 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
-            <i class="ti ti-heart-handshake text-base text-amber-400"></i>
-            <span>Portal Kependudukan Berbasis Human-Centered Design (HCD)</span>
-        </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6">
             Selamat Datang di <span class="bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-100 bg-clip-text text-transparent">{{ $profile->nama_desa }}</span>
         </h1>

@@ -545,7 +545,7 @@
                         <i class="ti ti-accessibility"></i>
                     </div>
                     <div>
-                        <h3 class="font-extrabold text-slate-800 text-lg">Panel Aksesibilitas HCD</h3>
+                        <h3 class="font-extrabold text-slate-800 text-lg">Panel Aksesibilitas</h3>
                         <p class="text-xs text-slate-400">Pengaturan kenyamanan baca & bantuan suara warga</p>
                     </div>
                 </div>

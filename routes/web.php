@@ -44,6 +44,19 @@ Route::get('/login', function () {
     return view('auth.login');
 })->middleware('guest')->name('login');
 
+Route::get('/{desa_slug}/admin/login', function ($desa_slug = null) {
+    if (Auth::check()) {
+        $user = Auth::user();
+        $slug = $user->desaProfile?->slug ?: ($desa_slug ?: 'nama-desa');
+        return redirect()->route('admin.dashboard', ['desa_slug' => $slug]);
+    }
+    return view('auth.login');
+})->name('admin.login');
+
+Route::get('/{desa_slug}/login', function ($desa_slug = null) {
+    return redirect()->route('admin.login', ['desa_slug' => $desa_slug]);
+});
+
 Route::post('/login', function (\Illuminate\Http\Request $request) {
     $credentials = $request->validate([
         'email' => 'required|email',
